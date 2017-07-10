@@ -105,6 +105,7 @@ public class Add_Contacts extends AppCompatActivity {
 
             try {
                 dao.add(person);
+                dao.close();
                 Toast toast = Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();

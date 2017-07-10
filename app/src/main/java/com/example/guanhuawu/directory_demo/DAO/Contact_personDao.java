@@ -41,12 +41,28 @@ public class Contact_personDao {
         return contact_persons;
     }
 
-    public List<Contact_person> getOrderBy_keywords(String key_words) throws SQLException {
-        List<Contact_person> contact_persons = ContactDaoOpen.
+    public Contact_person getOrderBy_Id(Integer Id) throws SQLException {
+        Contact_person person = ContactDaoOpen.
                 queryBuilder().
                 where().
-                like("Surname", key_words + "%").query();
-        return contact_persons;
+                idEq(Id).query().get(0);
+        return person;
+    }
+
+    public void Delete_ById(Integer id) {
+        try {
+            ContactDaoOpen.deleteById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update_Contact(Contact_person person){
+        try {
+            ContactDaoOpen.update(person);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void DeleteAll() throws SQLException {

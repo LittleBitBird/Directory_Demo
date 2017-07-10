@@ -149,6 +149,10 @@ public class Directory extends AppCompatActivity {
     public void onItemClick(int position, View view) {
         TextView view1 = view.findViewById(R.id.Member);
         Log.e("123", position + " " + view1.getText() + " " + personList.get(position).getSurname());
+        Intent intent = new Intent(this,Show_Detail_Message.class);
+        intent.putExtra("id",personList.get(position).getContact_person_id());
+        dao.close();
+        startActivity(intent);
     }
 
     public void Bind() {
@@ -191,6 +195,7 @@ public class Directory extends AppCompatActivity {
     @OnClick(R.id.Add_contacts)
     public void Add_contacts() {
         Intent intent = new Intent(this, Add_Contacts.class);
+        dao.close();
         startActivity(intent);
     }
 
