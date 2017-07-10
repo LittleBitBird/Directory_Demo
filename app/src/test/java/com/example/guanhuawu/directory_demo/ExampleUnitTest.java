@@ -1,5 +1,7 @@
 package com.example.guanhuawu.directory_demo;
 
+import com.example.guanhuawu.directory_demo.Helper.Concert;
+
 import org.junit.Test;
 
 /**
@@ -8,9 +10,11 @@ import org.junit.Test;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+
     @Test
-    public void addition_isCorrect() throws Exception {
-//       Concert concert = new Concert();
-        System.out.print(Concert.getPingYin("我").charAt(0));
+    public void Convert_isCorrect() throws Exception {
+        System.out.println(Concert.getPingYin("我"));
+        System.out.println(Concert.getPingYin("我阿斯蒂芬"));
+        System.out.println(Concert.getPingYin("汉语拼音"));
     }
 }

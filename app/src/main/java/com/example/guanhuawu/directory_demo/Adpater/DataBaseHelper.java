@@ -50,7 +50,6 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     private static DataBaseHelper instance;
 
     public static synchronized DataBaseHelper getHelper(Context context) {
-//        context = context.getApplicationContext();
         if (instance == null) {
             synchronized (DataBaseHelper.class) {
                 if (instance == null)
@@ -77,7 +76,6 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void close() {
         super.close();
-
         for (String key : daos.keySet()) {
             Dao dao = daos.get(key);
             dao = null;

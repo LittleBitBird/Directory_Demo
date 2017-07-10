@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Directory_Demo</string>
+    <string name="title_activity_add__contacts_">Add_Contacts_Activity</string>
 </resources>
