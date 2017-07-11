@@ -9,9 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.guanhuawu.directory_demo.DAO.Contact_personDao;
+import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
 import com.example.guanhuawu.directory_demo.Helper.Concert;
-import com.example.guanhuawu.directory_demo.persist.Contact_person;
+import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import java.sql.SQLException;
 
@@ -19,10 +19,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Update_and_Delete_Contacts extends AppCompatActivity {
+public class UpdateAndDeleteContacts extends AppCompatActivity {
     Integer Contact_person_id;
-    Contact_personDao dao;
-    Contact_person contact_person;
+    ContactPersonDao dao;
+    ContactPerson contact_person;
 
     @BindView(R.id.Back)
     TextView Back;
@@ -62,7 +62,11 @@ public class Update_and_Delete_Contacts extends AppCompatActivity {
         Intent intent = getIntent();
         Contact_person_id = intent.getIntExtra("id", 0);
         Log.e("12", "getIntent_from_Directory: " + Contact_person_id, null);
-        dao = new Contact_personDao(this);
+        try {
+            dao = new ContactPersonDao(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         try {
             contact_person = dao.getOrderBy_Id(Contact_person_id);
         } catch (SQLException e) {

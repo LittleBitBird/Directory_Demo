@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.guanhuawu.directory_demo.R;
-import com.example.guanhuawu.directory_demo.persist.Contact_person;
+import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import java.util.List;
 
@@ -17,14 +17,14 @@ import java.util.List;
  * Created by guanhua.wu on 2017/7/6.
  */
 
-public class Dierctory_ListView_adapter extends BaseAdapter {
+public class DierctoryListViewAdapter extends BaseAdapter {
     Context mContext;
-    List<Contact_person> personList = null;
+    List<ContactPerson> personList = null;
 
-    public Dierctory_ListView_adapter(Context context, List list) {
+    public DierctoryListViewAdapter(Context context, List list) {
         mContext = context;
         this.personList = list;
-        Log.e("Length", "Dierctory_ListView_adapter: "+list.size() );
+        Log.e("Length", "DierctoryListViewAdapter: "+list.size() );
     }
 
     @Override

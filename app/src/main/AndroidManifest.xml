@@ -16,9 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Add_Contacts" />
-        <activity android:name=".Update_and_Delete_Contacts" />
-        <activity android:name=".Show_Detail_Message"></activity>
+        <activity android:name=".AddContacts" />
+        <activity android:name=".UpdateAndDeleteContacts" />
+        <activity android:name=".ShowDetailMessage"></activity>
     </application>
 
 </manifest>

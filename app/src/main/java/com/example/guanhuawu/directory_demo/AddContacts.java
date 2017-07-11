@@ -10,9 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.guanhuawu.directory_demo.DAO.Contact_personDao;
+import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
 import com.example.guanhuawu.directory_demo.Helper.Concert;
-import com.example.guanhuawu.directory_demo.persist.Contact_person;
+import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
-public class Add_Contacts extends AppCompatActivity {
+public class AddContacts extends AppCompatActivity {
 
     @BindView(R.id.Back)
     TextView mBack;
@@ -54,8 +54,8 @@ public class Add_Contacts extends AppCompatActivity {
     @BindView(R.id.edtRemarks)
     EditText medtRemarks;
 
-    Contact_personDao dao;
-    List<Contact_person> personList = null;
+    ContactPersonDao dao;
+    List<ContactPerson> personList = null;
 
 
     @Override
@@ -64,7 +64,11 @@ public class Add_Contacts extends AppCompatActivity {
         setContentView(R.layout.activity_add__contacts);
 
         ButterKnife.bind(this);
-        dao = new Contact_personDao(this);
+        try {
+            dao = new ContactPersonDao(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @OnTextChanged(R.id.edtSurname)
@@ -86,13 +90,15 @@ public class Add_Contacts extends AppCompatActivity {
 
     @OnClick(R.id.Save)
     public void onViewClicked() {
+        Log.e("color", "1");
         String s = mAdd_contacts.getCurrentTextColor() + "";
         if (s.equals("-5592406")) {
             //颜色为灰色，不可用
 //            Log.e("color", mAdd_contacts.getCurrentTextColor() + "相同不可用");
         } else {
             //颜色不为灰色可用
-            Contact_person person = new Contact_person();
+            Log.e("color", "2");
+            ContactPerson person = new ContactPerson();
             person.setAddress(medtAddress.getText().toString());
             person.setEmail(medtEmail.getText().toString());
             person.setFirst_name(medtFirstName.getText().toString());
@@ -104,7 +110,7 @@ public class Add_Contacts extends AppCompatActivity {
             person.setTelePhone_Number(medtTelePhoneNumber.getText().toString());
 
             try {
-                dao.add(person);
+                dao.getContactDaoOpen().create(person);
                 dao.close();
                 Toast toast = Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);

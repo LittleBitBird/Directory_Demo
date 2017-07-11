@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * Created by guanhua.wu on 2017/7/6.
  */
 @DatabaseTable(tableName = "Contact_person")
-public class Contact_person {
+public class ContactPerson {
 
     @DatabaseField(generatedId = true)
     private Integer Contact_person_id;
@@ -30,16 +30,16 @@ public class Contact_person {
     @DatabaseField
     private String Email;
 
-    @DatabaseField
+    @DatabaseField(columnName = "address")
     private String Address;
 
     @DatabaseField
     private String Remarks;
 
-    public Contact_person() {
+    public ContactPerson() {
     }
 
-    public Contact_person(Integer contact_person_id, String surname, String first_name, String company_Name, String phone_Number, String telePhone_Number, String email, String address, String remarks) {
+    public ContactPerson(Integer contact_person_id, String surname, String first_name, String company_Name, String phone_Number, String telePhone_Number, String email, String address, String remarks) {
         Contact_person_id = contact_person_id;
         Surname = surname;
         this.first_name = first_name;
@@ -126,7 +126,7 @@ public class Contact_person {
 
     @Override
     public String toString() {
-        return "Contact_person{" +
+        return "ContactPerson{" +
                 "Contact_person_id=" + Contact_person_id +
                 ", Surname='" + Surname + '\'' +
                 ", first_name='" + first_name + '\'' +

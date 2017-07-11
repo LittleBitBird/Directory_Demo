@@ -5,9 +5,9 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
-import com.example.guanhuawu.directory_demo.DAO.Contact_personDao;
+import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
 import com.example.guanhuawu.directory_demo.Helper.Concert;
-import com.example.guanhuawu.directory_demo.persist.Contact_person;
+import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,10 +29,10 @@ public class ExampleInstrumentedTest {
         Log.e("test","UseAppContext");
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        Contact_personDao dao = new Contact_personDao(appContext);
-        List<Contact_person> personList = dao.getOrderBy_Surname();
+        ContactPersonDao dao = new ContactPersonDao(appContext);
+        List<ContactPerson> personList = dao.getOrderBy_Surname();
         String key_words="d";
-        for (Contact_person person:personList
+        for (ContactPerson person:personList
              ) {
             String name = person.getSurname()+person.getFirst_name();
             name = name.substring(1);

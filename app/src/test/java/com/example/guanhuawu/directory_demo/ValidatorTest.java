@@ -1,6 +1,6 @@
 package com.example.guanhuawu.directory_demo;
 
-import com.example.guanhuawu.directory_demo.Helper.validator;
+import com.example.guanhuawu.directory_demo.Helper.Validator;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -12,16 +12,16 @@ import org.junit.Test;
  */
 
 public class ValidatorTest {
-    static validator validator;
+    static Validator Validator;
 
     @BeforeClass
     public static void setup(){
-        validator = new validator();
+        Validator = new Validator();
     }
 
     @Test
     public void TestEmail(){
-        boolean b = validator.Email_Validate("12@12.com");
+        boolean b = Validator.Email_Validate("12@12.com");
         Assert.assertTrue("邮箱验证失败",b);
         System.out.println("邮箱验证通过");
     }

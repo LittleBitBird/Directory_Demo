@@ -5,8 +5,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
-import com.example.guanhuawu.directory_demo.DAO.Contact_personDao;
-import com.example.guanhuawu.directory_demo.persist.Contact_person;
+import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
+import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,13 +18,13 @@ import java.sql.SQLException;
  * Created by guanhua.wu on 2017/7/10.
  */
 @RunWith(AndroidJUnit4.class)
-public class Update_and_DeleteContactsTest {
+public class UpdateAndDeleteContactsTest {
     @Test
     public void getIntent_from_Directory() throws Exception {
         Context appContext = InstrumentationRegistry.getTargetContext();
-        Contact_personDao dao ;
-        Contact_person contact_person = null;
-        dao = new Contact_personDao(appContext);
+        ContactPersonDao dao ;
+        ContactPerson contact_person = null;
+        dao = new ContactPersonDao(appContext);
         try {
             contact_person = dao.getOrderBy_Id(20);
         } catch (SQLException e) {

@@ -10,10 +10,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.guanhuawu.directory_demo.Adpater.Dierctory_ListView_adapter;
-import com.example.guanhuawu.directory_demo.DAO.Contact_personDao;
+import com.example.guanhuawu.directory_demo.Adpater.DierctoryListViewAdapter;
+import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
 import com.example.guanhuawu.directory_demo.Helper.Concert;
-import com.example.guanhuawu.directory_demo.persist.Contact_person;
+import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -90,15 +90,20 @@ public class Directory extends AppCompatActivity {
     TextView Z;
     @BindView(R.id.Main_Index)
     TextView MainIndex;
-    Contact_personDao dao;
-    List<Contact_person> personList = null;
+    ContactPersonDao dao;
+    List<ContactPerson> personList = null;
+    DierctoryListViewAdapter view_adapter ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_directory);
         ButterKnife.bind(this);
-        dao = new Contact_personDao(this);
+        try {
+            dao = new ContactPersonDao(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         try {
 //            dao.DeleteAll();
             personList = dao.getOrderBy_Surname();
@@ -110,19 +115,18 @@ public class Directory extends AppCompatActivity {
     }
 
     public void Bind_Adapter() {
-        Dierctory_ListView_adapter view_adapter = new Dierctory_ListView_adapter(this, personList);
+        view_adapter = new DierctoryListViewAdapter(this, personList);
         listView.setAdapter(view_adapter);
     }
 
     @OnTextChanged(R.id.Search_Contacts)
     public void Search_Contacts() {
-        List<Contact_person> persons = new ArrayList<Contact_person>();
+        List<ContactPerson> persons = new ArrayList<ContactPerson>();
         if (Search_Contacts.length() > 0) {//搜索框里面有值，下一步
-//            String key_words = Search_Contacts.getText().toString().replaceAll(" ", "");
-            String key_words = "w";
+            String key_words = Search_Contacts.getText().toString().replaceAll(" ", "");
             key_words = Concert.getPingYin(key_words);
             Log.e("search", key_words);
-            for (Contact_person person : personList
+            for (ContactPerson person : personList
                     ) {
                 String name = person.getSurname() + person.getFirst_name();
                 name = name.substring(1);
@@ -132,16 +136,19 @@ public class Directory extends AppCompatActivity {
                     Log.e("PinYin", namePinYin + " " + persons.size());
                 }
             }
-            personList = persons;
-            Bind_Adapter();
+            personList.clear();
+            personList.addAll(persons);
+            view_adapter.notifyDataSetChanged();
         } else {//搜索框里面没有值
             Log.e("search", "null");
             try {
-                personList = dao.getOrderBy_Surname();
+                persons = dao.getOrderBy_Surname();
+                personList.clear();
+                personList.addAll(persons);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            Bind_Adapter();
+            view_adapter.notifyDataSetChanged();
         }
     }
 
@@ -149,7 +156,7 @@ public class Directory extends AppCompatActivity {
     public void onItemClick(int position, View view) {
         TextView view1 = view.findViewById(R.id.Member);
         Log.e("123", position + " " + view1.getText() + " " + personList.get(position).getSurname());
-        Intent intent = new Intent(this,Show_Detail_Message.class);
+        Intent intent = new Intent(this,ShowDetailMessage.class);
         intent.putExtra("id",personList.get(position).getContact_person_id());
         dao.close();
         startActivity(intent);
@@ -182,7 +189,7 @@ public class Directory extends AppCompatActivity {
     public void MuliteClick(View view) {
         TextView getTex = (TextView) view;
         String FirstChar = getTex.getText().toString().toLowerCase();
-        for (Contact_person person : personList) {
+        for (ContactPerson person : personList) {
             if (person.getSurname().substring(0, 1).equals(FirstChar)) {
                 Log.e("Fist", person.getSurname() + " " + personList.indexOf(person));
                 listView.setSelection(personList.indexOf(person));
@@ -194,14 +201,14 @@ public class Directory extends AppCompatActivity {
 
     @OnClick(R.id.Add_contacts)
     public void Add_contacts() {
-        Intent intent = new Intent(this, Add_Contacts.class);
+        Intent intent = new Intent(this, AddContacts.class);
         dao.close();
         startActivity(intent);
     }
 
     public void create() throws SQLException {
-        Contact_personDao contact_personDao = new Contact_personDao(this);
-        Contact_person person = new Contact_person();
+        ContactPersonDao contact_personDao = new ContactPersonDao(this);
+        ContactPerson person = new ContactPerson();
         person.setAddress("袭来");
         person.setEmail("123@12.com");
         person.setFirst_name("guanhua");
@@ -209,7 +216,6 @@ public class Directory extends AppCompatActivity {
         person.setRemarks("备注");
         person.setSurname("cu");
         person.setTelePhone_Number("88562309");
-        contact_personDao.add(person);
     }
 
 }

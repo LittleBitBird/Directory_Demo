@@ -2,8 +2,9 @@ package com.example.guanhuawu.directory_demo.Adpater;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
-import com.example.guanhuawu.directory_demo.persist.Contact_person;
+import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -20,9 +21,11 @@ import java.util.Map;
 public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String TABLE_NAME = "sqlite-test.db";
+    Context context;
 
     public DataBaseHelper(Context context) {
-        super(context, TABLE_NAME, null, 1);
+        super(context, TABLE_NAME, null, 10);
+        this.context = context;
     }
 
     private Map<String, Dao> daos = new HashMap<String, Dao>();
@@ -30,7 +33,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, Contact_person.class);
+            TableUtils.createTable(connectionSource, ContactPerson.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,12 +43,19 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i1) {
         try {
-            TableUtils.dropTable(connectionSource, Contact_person.class, true);
-            onCreate(sqLiteDatabase, connectionSource);
+            Log.e("veision","老版本："+i+"新版本"+i1);
+//            Contact_person_id,Surname,first_name,Company_Name,Phone_Number,TelePhone_Number,Email,address,Remarks
+            getContactDao().executeRaw("ALTER TABLE ContactPerson RENAME TO Contact_personOld");
+            TableUtils.createTable(connectionSource, ContactPerson.class);
+            getContactDao().executeRaw("insert into ContactPerson(Contact_person_id,Surname,first_name,Company_Name,Phone_Number,TelePhone_Number,Email,address,Remarks)" +
+                    "select Contact_person_id,Surname,first_name,Company_Name,Phone_Number,TelePhone_Number,Email,Address,Remarks from Contact_personOld");
+            Log.e("update","Success");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
 
     private static DataBaseHelper instance;
 
@@ -80,6 +90,10 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
             Dao dao = daos.get(key);
             dao = null;
         }
+    }
+
+    public Dao getContactDao() throws SQLException {
+        return getDao(ContactPerson.class);
     }
 
 }

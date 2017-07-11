@@ -7,8 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.guanhuawu.directory_demo.DAO.Contact_personDao;
-import com.example.guanhuawu.directory_demo.persist.Contact_person;
+import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
+import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import java.sql.SQLException;
 
@@ -16,10 +16,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Show_Detail_Message extends AppCompatActivity {
+public class ShowDetailMessage extends AppCompatActivity {
     Integer Contact_person_id;
-    Contact_personDao dao;
-    Contact_person contact_person;
+    ContactPersonDao dao;
+    ContactPerson contact_person;
     @BindView(R.id.Back)
     TextView Back;
     @BindView(R.id.Contact_Name)
@@ -56,9 +56,13 @@ public class Show_Detail_Message extends AppCompatActivity {
         Intent intent = getIntent();
         Contact_person_id = intent.getIntExtra("id", 0);
         Log.e("12", "getIntent_from_Directory: " + Contact_person_id, null);
-        dao = new Contact_personDao(this);
         try {
-            contact_person = dao.getOrderBy_Id(Contact_person_id);
+            dao = new ContactPersonDao(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            contact_person = dao.getContactDaoOpen().queryForId(Contact_person_id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -95,7 +99,7 @@ public class Show_Detail_Message extends AppCompatActivity {
     }
 
     public void EditMessage_Click() {
-        Intent intent = new Intent(this, Update_and_Delete_Contacts.class);
+        Intent intent = new Intent(this, UpdateAndDeleteContacts.class);
         intent.putExtra("id", contact_person.getContact_person_id());
         dao.close();
         startActivity(intent);

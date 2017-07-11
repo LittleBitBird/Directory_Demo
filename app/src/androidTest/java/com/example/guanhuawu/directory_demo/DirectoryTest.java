@@ -23,7 +23,7 @@ public class DirectoryTest {
 
 
     @Rule
-    public ActivityTestRule<Add_Contacts> rule = new ActivityTestRule<>(Add_Contacts.class);
+    public ActivityTestRule<AddContacts> rule = new ActivityTestRule<>(AddContacts.class);
 
     @Test
     public void search_Contacts() throws Exception {
