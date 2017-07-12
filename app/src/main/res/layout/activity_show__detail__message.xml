@@ -23,7 +23,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/Back"
+                android:id="@+id/tvBack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -33,7 +33,7 @@
                 android:textSize="7pt" />
 
             <TextView
-                android:id="@+id/Contact_Name"
+                android:id="@+id/tvContactName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -44,7 +44,7 @@
                 android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/EditMessage"
+                android:id="@+id/tvEditMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -68,7 +68,7 @@
                 android:text="姓氏" />
 
             <TextView
-                android:id="@+id/txtSurname"
+                android:id="@+id/tvSurName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -90,7 +90,7 @@
                 android:text="名字" />
 
             <TextView
-                android:id="@+id/txtFirst_name"
+                android:id="@+id/tvFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -112,7 +112,7 @@
                 android:text="公司" />
 
             <TextView
-                android:id="@+id/txtCompany_Name"
+                android:id="@+id/tvCompanyName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -136,7 +136,7 @@
                 android:text="住宅电话" />
 
             <TextView
-                android:id="@+id/txtTelePhone_Number"
+                android:id="@+id/tvTelePhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -160,7 +160,7 @@
                 android:text="工作电话" />
 
             <TextView
-                android:id="@+id/txtPhone_Number"
+                android:id="@+id/tvPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -184,7 +184,7 @@
                 android:text="电子邮件" />
 
             <TextView
-                android:id="@+id/txtEmail"
+                android:id="@+id/tvEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -208,7 +208,7 @@
                 android:text="地址" />
 
             <TextView
-                android:id="@+id/txtAddress"
+                android:id="@+id/tvAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -232,7 +232,7 @@
                 android:text="备注" />
 
             <TextView
-                android:id="@+id/txtRemarks"
+                android:id="@+id/tvRemarks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

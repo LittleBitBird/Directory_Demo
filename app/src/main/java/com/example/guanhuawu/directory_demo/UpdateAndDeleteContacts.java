@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
-import com.example.guanhuawu.directory_demo.Helper.Concert;
 import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import java.sql.SQLException;
@@ -20,16 +19,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class UpdateAndDeleteContacts extends AppCompatActivity {
-    Integer Contact_person_id;
+    Integer contactPersonId;
     ContactPersonDao dao;
-    ContactPerson contact_person;
+    ContactPerson contactPerson;
 
-    @BindView(R.id.Back)
-    TextView Back;
-    @BindView(R.id.Contact_Name)
-    TextView ContactName;
-    @BindView(R.id.Save)
-    TextView Save;
     @BindView(R.id.edtSurname)
     EditText edtSurname;
     @BindView(R.id.edtFirst_name)
@@ -46,81 +39,89 @@ public class UpdateAndDeleteContacts extends AppCompatActivity {
     EditText edtAddress;
     @BindView(R.id.edtRemarks)
     EditText edtRemarks;
-    @BindView(R.id.Delete_Contact_Person)
+    @BindView(R.id.tvDeleteContactPerson)
     TextView DeleteContactPerson;
+    @BindView(R.id.tvBack)
+    TextView tvBack;
+    @BindView(R.id.tvContactName)
+    TextView tvContactName;
+    @BindView(R.id.tvSave)
+    TextView tvSave;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_and__delete);
         ButterKnife.bind(this);
-        getIntent_from_Directory();
-        setEdit_Values();
+        getIntentFromDirectory();
+        setEditValues();
     }
 
-    public void getIntent_from_Directory() {
+    public void getIntentFromDirectory() {
         Intent intent = getIntent();
-        Contact_person_id = intent.getIntExtra("id", 0);
-        Log.e("12", "getIntent_from_Directory: " + Contact_person_id, null);
+        contactPersonId = intent.getIntExtra("id", 0);
+        Log.e("12", "getIntent_from_Directory: " + contactPersonId, null);
         try {
             dao = new ContactPersonDao(this);
+            contactPerson = dao.getContactDaoOpen().queryForId(contactPersonId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            contact_person = dao.getOrderBy_Id(Contact_person_id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        ContactName.setText(contact_person.getSurname().substring(1) + contact_person.getFirst_name());
+        tvContactName.setText(contactPerson.getSurName() + contactPerson.getFirstName());
     }
 
-    public void setEdit_Values() {
-        edtAddress.setText(contact_person.getAddress());
-        edtCompanyName.setText(contact_person.getCompany_Name());
-        edtEmail.setText(contact_person.getEmail());
-        edtFirstName.setText(contact_person.getFirst_name());
-        edtPhoneNumber.setText(contact_person.getPhone_Number());
-        edtRemarks.setText(contact_person.getRemarks());
-        edtSurname.setText(contact_person.getSurname().substring(1));
-        edtTelePhoneNumber.setText(contact_person.getTelePhone_Number());
+    public void setEditValues() {
+        edtAddress.setText(contactPerson.getAddress());
+        edtCompanyName.setText(contactPerson.getCompanyName());
+        edtEmail.setText(contactPerson.getEmail());
+        edtFirstName.setText(contactPerson.getFirstName());
+        edtPhoneNumber.setText(contactPerson.getPhoneNumber());
+        edtRemarks.setText(contactPerson.getRemarks());
+        edtSurname.setText(contactPerson.getSurName());
+        edtTelePhoneNumber.setText(contactPerson.getTelephoneNumber());
     }
 
-    @OnClick(R.id.Back)
-    public void onViewClicked_Back() {
-        Intent intent = new Intent(this, Directory.class);
+    @OnClick(R.id.tvBack)
+    public void onViewClickedBack() {
         dao.close();
-        startActivity(intent);
+        this.finish();
     }
 
-    @OnClick(R.id.Delete_Contact_Person)
-    public void onViewClicked_Delete() {
-        dao.Delete_ById(contact_person.getContact_person_id());
+    @OnClick(R.id.tvDeleteContactPerson)
+    public void onViewClickedDelete() {
+        try {
+            dao.getContactDaoOpen().deleteById(contactPerson.getContactPersonId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         dao.close();
         Toast toast = Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
-        Intent intent = new Intent(this, Directory.class);
-        startActivity(intent);
+        this.finish();
     }
 
-    @OnClick(R.id.Save)
-    public void update_Contact() {
-        contact_person.setCompany_Name(edtCompanyName.getText().toString());
-        contact_person.setRemarks(edtRemarks.getText().toString());
-        contact_person.setPhone_Number(edtPhoneNumber.getText().toString());
-        contact_person.setEmail(edtEmail.getText().toString());
-        contact_person.setTelePhone_Number(edtTelePhoneNumber.getText().toString());
-        contact_person.setAddress(edtAddress.getText().toString());
-        contact_person.setFirst_name(edtFirstName.getText().toString());
-        char First = Concert.getPingYin(edtSurname.getText().toString()).charAt(0);
-        contact_person.setSurname(First + edtSurname.getText().toString());
-        dao.update_Contact(contact_person);
+    @OnClick(R.id.tvSave)
+    public void updateContact() {
+        contactPerson.setCompanyName(edtCompanyName.getText().toString());
+        contactPerson.setRemarks(edtRemarks.getText().toString());
+        contactPerson.setPhoneNumber(edtPhoneNumber.getText().toString());
+        contactPerson.setEmail(edtEmail.getText().toString());
+        contactPerson.setTelephoneNumber(edtTelePhoneNumber.getText().toString());
+        contactPerson.setAddress(edtAddress.getText().toString());
+        contactPerson.setFirstName(edtFirstName.getText().toString());
+        contactPerson.setSurName(edtSurname.getText().toString());
+
+        try {
+            dao.getContactDaoOpen().update(contactPerson);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Toast toast = Toast.makeText(this, "更新成功", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
-        Intent intent = new Intent(this, Directory.class);
         dao.close();
-        startActivity(intent);
+        this.finish();
     }
 }

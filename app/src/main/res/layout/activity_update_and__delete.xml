@@ -26,7 +26,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/Back"
+                android:id="@+id/tvBack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -36,7 +36,7 @@
                 android:textSize="7pt" />
 
             <TextView
-                android:id="@+id/Contact_Name"
+                android:id="@+id/tvContactName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -47,7 +47,7 @@
                 android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/Save"
+                android:id="@+id/tvSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -122,7 +122,7 @@
             android:inputType="textPersonName"  />
 
         <TextView
-        android:id="@+id/Delete_Contact_Person"
+        android:id="@+id/tvDeleteContactPerson"
         android:layout_marginTop="30px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

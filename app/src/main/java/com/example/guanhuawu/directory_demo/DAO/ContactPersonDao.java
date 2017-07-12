@@ -5,7 +5,6 @@ import android.content.Context;
 import com.example.guanhuawu.directory_demo.Adpater.DataBaseHelper;
 import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.support.ConnectionSource;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
  * Created by guanhua.wu on 2017/7/6.
  */
 
-public class ContactPersonDao  {
+public class ContactPersonDao {
 
     private Context context;
     private Dao<ContactPerson, Integer> ContactDaoOpen;
@@ -22,7 +21,7 @@ public class ContactPersonDao  {
 
     public ContactPersonDao(Context context) throws SQLException {
         this.context = context;
-        helper = new DataBaseHelper(context);
+        helper = DataBaseHelper.getHelper(context);
         try {
             ContactDaoOpen = helper.getDao(ContactPerson.class);
         } catch (SQLException e) {
@@ -30,32 +29,27 @@ public class ContactPersonDao  {
         }
     }
 
-    public ContactPersonDao(ConnectionSource connectionSource, Context context) throws SQLException {
-        this.context = context;
-        helper = new DataBaseHelper(context);
-        try {
-            ContactDaoOpen = helper.getDao(ContactPerson.class);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public ContactPersonDao(ConnectionSource connectionSource, Context context) throws SQLException {
+//        this.context = context;
+//        helper = new DataBaseHelper(context);
+//        try {
+//            ContactDaoOpen = helper.getDao(ContactPerson.class);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public Dao<ContactPerson, Integer> getContactDaoOpen() {
         return ContactDaoOpen;
     }
 
-    //    public void add(ContactPerson contact_person) throws SQLException {
-//        ContactDaoOpen.create(contact_person);
-//    }
-
-
-    public List<ContactPerson> getOrderBy_Surname() throws SQLException {
-        List<ContactPerson> contact_persons = ContactDaoOpen.queryBuilder().
+    public List<ContactPerson> getOrderBySurname() throws SQLException {
+        List<ContactPerson> personList = ContactDaoOpen.queryBuilder().
                 orderBy("Surname", true).query();
-        return contact_persons;
+        return personList;
     }
 
-    public ContactPerson getOrderBy_Id(Integer Id) throws SQLException {
+    public ContactPerson getOrderById(Integer Id) throws SQLException {
         ContactPerson person = ContactDaoOpen.
                 queryBuilder().
                 where().
@@ -63,7 +57,7 @@ public class ContactPersonDao  {
         return person;
     }
 
-    public void Delete_ById(Integer id) {
+    public void DeleteById(Integer id) {
         try {
             ContactDaoOpen.deleteById(id);
         } catch (SQLException e) {
@@ -71,21 +65,15 @@ public class ContactPersonDao  {
         }
     }
 
-    public void update_Contact(ContactPerson person){
-        try {
-            ContactDaoOpen.update(person);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void DeleteAll() throws SQLException {
-        List<ContactPerson> contact_persons = ContactDaoOpen.queryBuilder().query();
-        ContactDaoOpen.delete(contact_persons);
+        List<ContactPerson> personList = ContactDaoOpen.queryBuilder().query();
+        ContactDaoOpen.delete(personList);
     }
 
     public void close() {
         helper.close();
+//        helper = null;
+//        ContactDaoOpen = null;
     }
 
 }

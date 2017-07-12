@@ -24,8 +24,8 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     Context context;
 
     public DataBaseHelper(Context context) {
-        super(context, TABLE_NAME, null, 10);
-        this.context = context;
+        super(context.getApplicationContext(), TABLE_NAME, null, 22);
+        this.context = context.getApplicationContext();
     }
 
     private Map<String, Dao> daos = new HashMap<String, Dao>();
@@ -43,21 +43,21 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i1) {
         try {
-            Log.e("veision","老版本："+i+"新版本"+i1);
+            Log.e("veision", "老版本：" + i + "新版本" + i1);
 //            Contact_person_id,Surname,first_name,Company_Name,Phone_Number,TelePhone_Number,Email,address,Remarks
-            getContactDao().executeRaw("ALTER TABLE ContactPerson RENAME TO Contact_personOld");
+//            getContactDao().executeRaw("ALTER TABLE Contact_Person RENAME TO Contact_personOld");
             TableUtils.createTable(connectionSource, ContactPerson.class);
-            getContactDao().executeRaw("insert into ContactPerson(Contact_person_id,Surname,first_name,Company_Name,Phone_Number,TelePhone_Number,Email,address,Remarks)" +
-                    "select Contact_person_id,Surname,first_name,Company_Name,Phone_Number,TelePhone_Number,Email,Address,Remarks from Contact_personOld");
-            Log.e("update","Success");
+            getContactDao().executeRaw("insert into Contact_Person(contact_person_id,surname,first_name,company_name,phone_number,telephone_number,email,address,remark)" +
+                    "select contact_person_id,sur_name,first_name,company_name,phone_number,telephone_number,email,address,remark from Contact_personOld");
+            getContactDao().executeRaw("drop table if exists Contact_personOld");
+            Log.e("update", "Success");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-
-    private static DataBaseHelper instance;
+    public static DataBaseHelper instance;
 
     public static synchronized DataBaseHelper getHelper(Context context) {
         if (instance == null) {
@@ -86,6 +86,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void close() {
         super.close();
+        instance = null;
         for (String key : daos.keySet()) {
             Dao dao = daos.get(key);
             dao = null;

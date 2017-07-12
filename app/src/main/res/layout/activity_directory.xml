@@ -43,7 +43,7 @@
                 android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/Add_contacts"
+                android:id="@+id/tvAddContacts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -60,7 +60,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/Search_Contacts"
+                android:id="@+id/edtSearchContacts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -83,7 +83,7 @@
             android:background="#ffffff">
 
             <TextView
-                android:id="@+id/Main_Index"
+                android:id="@+id/tvMainIndex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/darker_gray"
@@ -104,7 +104,7 @@
                 android:orientation="vertical">
 
                 <ListView
-                    android:id="@+id/list_View"
+                    android:id="@+id/lvListView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"></ListView>
             </LinearLayout>

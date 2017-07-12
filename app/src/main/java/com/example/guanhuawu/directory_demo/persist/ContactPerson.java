@@ -6,136 +6,120 @@ import com.j256.ormlite.table.DatabaseTable;
 /**
  * Created by guanhua.wu on 2017/7/6.
  */
-@DatabaseTable(tableName = "Contact_person")
+@DatabaseTable(tableName = "Contact_Person")
 public class ContactPerson {
+//    contact_person_id,surname,first_name,company_name,phone_number,telephone_number,email,address,remark
+    @DatabaseField(generatedId = true, columnName = "contact_person_id")
+    private Integer contactPersonId;
 
-    @DatabaseField(generatedId = true)
-    private Integer Contact_person_id;
+    @DatabaseField(columnName = "surname")
+    private String surName;
 
-    @DatabaseField
-    private String Surname;
+    @DatabaseField(columnName = "first_name")
+    private String firstName;
 
-    @DatabaseField
-    private String first_name;
+    @DatabaseField(columnName = "company_name")
+    private String companyName;
 
-    @DatabaseField
-    private String Company_Name;
+    @DatabaseField(columnName = "phone_number")
+    private String phoneNumber;
 
-    @DatabaseField
-    private String Phone_Number;
+    @DatabaseField(columnName = "telephone_number")
+    private String telephoneNumber;
 
-    @DatabaseField
-    private String TelePhone_Number;
-
-    @DatabaseField
-    private String Email;
+    @DatabaseField(columnName = "email")
+    private String email;
 
     @DatabaseField(columnName = "address")
-    private String Address;
+    private String address;
 
-    @DatabaseField
-    private String Remarks;
+    @DatabaseField(columnName = "remark")
+    private String remarks;
 
     public ContactPerson() {
     }
 
-    public ContactPerson(Integer contact_person_id, String surname, String first_name, String company_Name, String phone_Number, String telePhone_Number, String email, String address, String remarks) {
-        Contact_person_id = contact_person_id;
-        Surname = surname;
-        this.first_name = first_name;
-        Company_Name = company_Name;
-        Phone_Number = phone_Number;
-        TelePhone_Number = telePhone_Number;
-        Email = email;
-        Address = address;
-        Remarks = remarks;
+    public ContactPerson(Integer contactPersonId, String surName, String firstName, String companyName, String phoneNumber, String telephoneNumber, String email, String address, String remarks) {
+        this.contactPersonId = contactPersonId;
+        this.surName = surName;
+        this.firstName = firstName;
+        this.companyName = companyName;
+        this.phoneNumber = phoneNumber;
+        this.telephoneNumber = telephoneNumber;
+        this.email = email;
+        this.address = address;
+        this.remarks = remarks;
     }
 
-    public Integer getContact_person_id() {
-        return Contact_person_id;
+    public Integer getContactPersonId() {
+        return contactPersonId;
     }
 
-    public void setContact_person_id(Integer contact_person_id) {
-        Contact_person_id = contact_person_id;
+    public void setContactPersonId(Integer contactPersonId) {
+        contactPersonId = contactPersonId;
     }
 
-    public String getSurname() {
-        return Surname;
+    public String getSurName() {
+        return surName;
     }
 
-    public void setSurname(String surname) {
-        Surname = surname;
+    public void setSurName(String surName) {
+        this.surName = surName;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getCompany_Name() {
-        return Company_Name;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setCompany_Name(String company_Name) {
-        Company_Name = company_Name;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getPhone_Number() {
-        return Phone_Number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_Number(String phone_Number) {
-        Phone_Number = phone_Number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getTelePhone_Number() {
-        return TelePhone_Number;
+    public String getTelephoneNumber() {
+        return telephoneNumber;
     }
 
-
-    public void setTelePhone_Number(String telePhone_Number) {
-        TelePhone_Number = telePhone_Number;
+    public void setTelephoneNumber(String telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
+        this.address = address;
     }
 
     public String getRemarks() {
-        return Remarks;
+        return remarks;
     }
 
     public void setRemarks(String remarks) {
-        Remarks = remarks;
-    }
-
-    @Override
-    public String toString() {
-        return "ContactPerson{" +
-                "Contact_person_id=" + Contact_person_id +
-                ", Surname='" + Surname + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", Company_Name='" + Company_Name + '\'' +
-                ", Phone_Number='" + Phone_Number + '\'' +
-                ", TelePhone_Number='" + TelePhone_Number + '\'' +
-                ", Email='" + Email + '\'' +
-                ", Address='" + Address + '\'' +
-                ", Remarks='" + Remarks + '\'' +
-                '}';
+        this.remarks = remarks;
     }
 }

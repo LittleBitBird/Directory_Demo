@@ -30,14 +30,14 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         ContactPersonDao dao = new ContactPersonDao(appContext);
-        List<ContactPerson> personList = dao.getOrderBy_Surname();
-        String key_words="d";
+        List<ContactPerson> personList = dao.getOrderBySurname();
+        String keyWords="d";
         for (ContactPerson person:personList
              ) {
-            String name = person.getSurname()+person.getFirst_name();
+            String name = person.getSurName()+person.getFirstName();
             name = name.substring(1);
             String namePinYin = Concert.getPingYin(name);
-            if(namePinYin.startsWith(key_words))
+            if(namePinYin.startsWith(keyWords))
             Log.e("PinYin",namePinYin);
         }
         System.out.println(personList.size());

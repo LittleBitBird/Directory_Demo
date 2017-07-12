@@ -20,32 +20,32 @@ import java.sql.SQLException;
 @RunWith(AndroidJUnit4.class)
 public class UpdateAndDeleteContactsTest {
     @Test
-    public void getIntent_from_Directory() throws Exception {
+    public void getIntentFromDirectory() throws Exception {
         Context appContext = InstrumentationRegistry.getTargetContext();
         ContactPersonDao dao ;
-        ContactPerson contact_person = null;
+        ContactPerson contactPerson = null;
         dao = new ContactPersonDao(appContext);
         try {
-            contact_person = dao.getOrderBy_Id(20);
+            contactPerson = dao.getContactDaoOpen().queryForId(32);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if(contact_person.getFirst_name().length()!=0){
+        if(contactPerson.getFirstName().length()!=0){
             Log.e("test","First_name is not null");
         }
-        if(contact_person.getSurname().length()!=0){
+        if(contactPerson.getSurName().length()!=0){
             Log.e("test","Surname is not null");
         }
-        if(contact_person.getAddress().length()!=0){
+        if(contactPerson.getAddress().length()!=0){
             Log.e("test","Address is not null");
         }
-        if(contact_person.getCompany_Name().length()!=0){
+        if(contactPerson.getCompanyName().length()!=0){
             Log.e("test","Company_Name is not null");
         }
-        if(contact_person.getEmail().length()!=0){
+        if(contactPerson.getEmail().length()!=0){
             Log.e("test","Email is not null");
         }
-        Assert.assertNotNull(contact_person);
+        Assert.assertNotNull(contactPerson);
     }
 
 }

@@ -5,7 +5,7 @@ package com.example.guanhuawu.directory_demo.Helper;
  */
 
 public class Validator {
-    public boolean Email_Validate(String Email){
+    public boolean emailValidate(String Email){
 //        String s = "/^(\\w)*@(\\w)*.(\\w)*$/";
         String s = "^\\w+@(\\w)+.(\\w)+";
         return Email.matches(s);

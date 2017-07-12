@@ -17,91 +17,88 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ShowDetailMessage extends AppCompatActivity {
-    Integer Contact_person_id;
+    Integer contactPersonId;
     ContactPersonDao dao;
-    ContactPerson contact_person;
-    @BindView(R.id.Back)
-    TextView Back;
-    @BindView(R.id.Contact_Name)
-    TextView ContactName;
-    @BindView(R.id.EditMessage)
-    TextView EditMessage;
-    @BindView(R.id.txtSurname)
-    TextView txtSurname;
-    @BindView(R.id.txtFirst_name)
-    TextView txtFirstName;
-    @BindView(R.id.txtCompany_Name)
-    TextView txtCompanyName;
-    @BindView(R.id.txtTelePhone_Number)
-    TextView txtTelePhoneNumber;
-    @BindView(R.id.txtPhone_Number)
-    TextView txtPhoneNumber;
-    @BindView(R.id.txtEmail)
-    TextView txtEmail;
-    @BindView(R.id.txtAddress)
-    TextView txtAddress;
-    @BindView(R.id.txtRemarks)
-    TextView txtRemarks;
+    ContactPerson contactPerson;
+    @BindView(R.id.tvBack)
+    TextView tvBack;
+    @BindView(R.id.tvContactName)
+    TextView tvContactName;
+    @BindView(R.id.tvEditMessage)
+    TextView tvEditMessage;
+    @BindView(R.id.tvSurName)
+    TextView tvSurName;
+    @BindView(R.id.tvFirstName)
+    TextView tvFirstName;
+    @BindView(R.id.tvCompanyName)
+    TextView tvCompanyName;
+    @BindView(R.id.tvTelePhoneNumber)
+    TextView tvTelePhoneNumber;
+    @BindView(R.id.tvPhoneNumber)
+    TextView tvPhoneNumber;
+    @BindView(R.id.tvEmail)
+    TextView tvEmail;
+    @BindView(R.id.tvAddress)
+    TextView tvAddress;
+    @BindView(R.id.tvRemarks)
+    TextView tvRemarks;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show__detail__message);
         ButterKnife.bind(this);
-        getIntent_from_Directory();
-        setText_Values();
+        getIntentFromDirectory();
+        setTextValues();
     }
 
-    public void getIntent_from_Directory() {
+    public void getIntentFromDirectory() {
         Intent intent = getIntent();
-        Contact_person_id = intent.getIntExtra("id", 0);
-        Log.e("12", "getIntent_from_Directory: " + Contact_person_id, null);
+        contactPersonId = intent.getIntExtra("id", 0);
+        Log.e("12", "getIntent_from_Directory: " + contactPersonId, null);
         try {
             dao = new ContactPersonDao(this);
+            contactPerson = dao.getContactDaoOpen().queryForId(contactPersonId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            contact_person = dao.getContactDaoOpen().queryForId(Contact_person_id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        ContactName.setText(contact_person.getSurname().substring(1) + contact_person.getFirst_name());
+        tvContactName.setText(contactPerson.getSurName() + contactPerson.getFirstName());
     }
 
-    public void setText_Values() {
-        txtAddress.setText(contact_person.getAddress());
-        txtCompanyName.setText(contact_person.getCompany_Name());
-        txtEmail.setText(contact_person.getEmail());
-        txtFirstName.setText(contact_person.getFirst_name());
-        txtPhoneNumber.setText(contact_person.getPhone_Number());
-        txtRemarks.setText(contact_person.getRemarks());
-        txtSurname.setText(contact_person.getSurname().substring(1));
-        txtTelePhoneNumber.setText(contact_person.getTelePhone_Number());
+    public void setTextValues() {
+        tvAddress.setText(contactPerson.getAddress());
+        tvCompanyName.setText(contactPerson.getCompanyName());
+        tvEmail.setText(contactPerson.getEmail());
+        tvFirstName.setText(contactPerson.getFirstName());
+        tvPhoneNumber.setText(contactPerson.getPhoneNumber());
+        tvRemarks.setText(contactPerson.getRemarks());
+        tvSurName.setText(contactPerson.getSurName());
+        tvTelePhoneNumber.setText(contactPerson.getTelephoneNumber());
     }
 
-    @OnClick({R.id.Back, R.id.EditMessage})
+
+
+    public void backClick() {
+        dao.close();
+        this.finish();
+    }
+
+    public void editMessageClick() {
+        Intent intent = new Intent(this, UpdateAndDeleteContacts.class);
+        intent.putExtra("id", contactPerson.getContactPersonId());
+        startActivity(intent);
+    }
+
+    @OnClick({R.id.tvBack, R.id.tvEditMessage})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.Back:
-                Back_Click();
+            case R.id.tvBack:
+                backClick();
                 break;
-            case R.id.EditMessage:
-                EditMessage_Click();
+            case R.id.tvEditMessage:
+                editMessageClick();
                 break;
         }
-    }
-
-    public void Back_Click() {
-        Intent intent = new Intent(this, Directory.class);
-        dao.close();
-        startActivity(intent);
-    }
-
-    public void EditMessage_Click() {
-        Intent intent = new Intent(this, UpdateAndDeleteContacts.class);
-        intent.putExtra("id", contact_person.getContact_person_id());
-        dao.close();
-        startActivity(intent);
     }
 }

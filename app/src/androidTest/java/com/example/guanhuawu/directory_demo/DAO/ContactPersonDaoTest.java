@@ -37,41 +37,42 @@ public class ContactPersonDaoTest {
         ContactPerson person = new ContactPerson();
         person.setAddress("袭来");
         person.setEmail("123@12.com");
-        person.setFirst_name("guanhua");
-        person.setPhone_Number("17802592330");
         person.setRemarks("备注");
-        person.setSurname("qqq");
-        person.setTelePhone_Number("88562309");
-//        DataBaseHelper baseHelper = new DataBaseHelper(appContext);
-        ContactPersonDao contactPersonDao1 = new ContactPersonDao(appContext);
-        contactPersonDao1.getContactDaoOpen().queryForAll();
+        DataBaseHelper baseHelper = new DataBaseHelper(appContext);
+        baseHelper.getWritableDatabase();
+//        baseHelper.getWritableDatabase().rawQuery("select from ",null);
+        baseHelper.getWritableDatabase().close();
+        baseHelper.close();
 //        Basedao.create(person);
     }
 
     @Test
     public void getOrderBy_Surname() throws Exception {
+        contactPersonDao.getContactDaoOpen().executeRaw("insert into Contact_Person(contact_person_id,surname,first_name,company_name,phone_number,telephone_number,email,address,remark)" +
+                "select contact_person_id,sur_name,first_name,company_name,phone_number,telephone_number,email,address,remark from Contact_personOld");
+
 
     }
 
     @Test
     public void getOrderBy_Id() throws Exception {
-        contactPersonDao.getOrderBy_Id(30);
+
     }
 
     @Test
     public void delete_ById() throws Exception {
-        contactPersonDao.deleteById(38);
-        contactPersonDao.deleteById(39);
-        contactPersonDao.deleteById(40);
-        contactPersonDao.deleteById(41);
-        contactPersonDao.deleteById(42);
-        contactPersonDao.deleteById(43);
 
     }
 
     @Test
     public void update_Contact() throws Exception {
 
+    }
+
+    @Test
+    public void deleteTable() throws Exception {
+        contactPersonDao.getContactDaoOpen().executeRaw("drop table if exists Contact_person");
+        contactPersonDao.getContactDaoOpen().executeRaw("drop table if exists Contact_personOld2");
     }
 
 }

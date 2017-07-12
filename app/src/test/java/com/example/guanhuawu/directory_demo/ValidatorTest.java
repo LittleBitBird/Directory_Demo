@@ -21,7 +21,7 @@ public class ValidatorTest {
 
     @Test
     public void TestEmail(){
-        boolean b = Validator.Email_Validate("12@12.com");
+        boolean b = Validator.emailValidate("12@12.com");
         Assert.assertTrue("邮箱验证失败",b);
         System.out.println("邮箱验证通过");
     }
