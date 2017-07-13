@@ -1,4 +1,4 @@
-package com.example.guanhuawu.directory_demo.Helper;
+package com.example.guanhuawu.directory_demo.helper;
 
 /**
  * Created by guanhua.wu on 2017/7/7.

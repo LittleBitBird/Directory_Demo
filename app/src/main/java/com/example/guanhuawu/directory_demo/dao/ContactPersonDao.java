@@ -1,9 +1,10 @@
-package com.example.guanhuawu.directory_demo.DAO;
+package com.example.guanhuawu.directory_demo.dao;
 
 import android.content.Context;
 
-import com.example.guanhuawu.directory_demo.Adpater.DataBaseHelper;
+import com.example.guanhuawu.directory_demo.adpater.DataBaseHelper;
 import com.example.guanhuawu.directory_demo.persist.ContactPerson;
+import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
@@ -13,21 +14,18 @@ import java.util.List;
  * Created by guanhua.wu on 2017/7/6.
  */
 
-public class ContactPersonDao {
+public class ContactPersonDao extends BaseDaoImpl<ContactPerson, Integer> {
 
-    private Context context;
+
     private Dao<ContactPerson, Integer> ContactDaoOpen;
     private DataBaseHelper helper;
 
     public ContactPersonDao(Context context) throws SQLException {
-        this.context = context;
+        super(DataBaseHelper.getHelper(context.getApplicationContext()).getConnectionSource(), ContactPerson.class);
         helper = DataBaseHelper.getHelper(context);
-        try {
-            ContactDaoOpen = helper.getDao(ContactPerson.class);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        getContactDaoOpen();
     }
+
 
 //    public ContactPersonDao(ConnectionSource connectionSource, Context context) throws SQLException {
 //        this.context = context;
@@ -40,6 +38,11 @@ public class ContactPersonDao {
 //    }
 
     public Dao<ContactPerson, Integer> getContactDaoOpen() {
+        try {
+            ContactDaoOpen = helper.getDao(ContactPerson.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return ContactDaoOpen;
     }
 
@@ -57,13 +60,6 @@ public class ContactPersonDao {
         return person;
     }
 
-    public void DeleteById(Integer id) {
-        try {
-            ContactDaoOpen.deleteById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void DeleteAll() throws SQLException {
         List<ContactPerson> personList = ContactDaoOpen.queryBuilder().query();
@@ -72,8 +68,8 @@ public class ContactPersonDao {
 
     public void close() {
         helper.close();
-//        helper = null;
-//        ContactDaoOpen = null;
+        helper = null;
+        ContactDaoOpen = null;
     }
 
 }

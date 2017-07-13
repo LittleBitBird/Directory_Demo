@@ -5,7 +5,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
-import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
+import com.example.guanhuawu.directory_demo.dao.ContactPersonDao;
 import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import org.junit.Assert;

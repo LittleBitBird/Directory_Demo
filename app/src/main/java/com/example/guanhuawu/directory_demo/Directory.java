@@ -10,10 +10,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.guanhuawu.directory_demo.Adpater.DierctoryListViewAdapter;
-import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
-import com.example.guanhuawu.directory_demo.Helper.Concert;
-import com.example.guanhuawu.directory_demo.Helper.FirstMapDemo;
+import com.example.guanhuawu.directory_demo.adpater.DierctoryListViewAdapter;
+import com.example.guanhuawu.directory_demo.dao.ContactPersonDao;
+import com.example.guanhuawu.directory_demo.helper.Concert;
+import com.example.guanhuawu.directory_demo.helper.MapContactHelper;
 import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import java.sql.SQLException;
@@ -117,12 +117,7 @@ public class Directory extends AppCompatActivity {
     public void bindData(){
         try {
             dao = new ContactPersonDao(this);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-//            dao.DeleteAll();
-            personList = dao.getOrderBySurname();
+            personList = dao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -131,7 +126,7 @@ public class Directory extends AppCompatActivity {
     }
 
     public void bindAdapter() {
-        contactMap = FirstMapDemo.convertFromListToMap(personList);
+        contactMap = MapContactHelper.convertFromListToMap(personList);
         contactMapSave.putAll(contactMap);
         viewAdapter = new DierctoryListViewAdapter(this, contactMap);
         listView.setAdapter(viewAdapter);
@@ -160,7 +155,7 @@ public class Directory extends AppCompatActivity {
             viewAdapter.notifyDataSetChanged();
         } else {//搜索框里面没有值
             Log.e("search", "null");
-            Map<String, List> map = FirstMapDemo.convertFromListToMap(personList);
+            Map<String, List> map = MapContactHelper.convertFromListToMap(personList);
             contactMap.clear();
             contactMap.putAll(map);
             viewAdapter.notifyDataSetChanged();
@@ -172,7 +167,7 @@ public class Directory extends AppCompatActivity {
         TextView view1 = view.findViewById(R.id.tvMember);
 //        Log.e("123", position + " " + view1.getText() + " " + personList.get(position).getSurName());
         Intent intent = new Intent(this, ShowDetailMessage.class);
-        intent.putExtra("id", FirstMapDemo.findPersonByPosition(contactMap, position).getContactPersonId());
+        intent.putExtra("id", MapContactHelper.findPersonByPosition(contactMap, position).getContactPersonId());
         startActivity(intent);
     }
 
@@ -186,7 +181,7 @@ public class Directory extends AppCompatActivity {
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
                 try {
-                    ContactPerson person = FirstMapDemo.findPersonByPosition(contactMap, i);
+                    ContactPerson person = MapContactHelper.findPersonByPosition(contactMap, i);
                     if (person != null)
                         MainIndex.setText(Concert.getPingYin(person.getSurName()).substring(0, 1).toUpperCase());
                 } catch (Exception e) {
@@ -205,7 +200,7 @@ public class Directory extends AppCompatActivity {
     public void MuliteClick(View view) {
         TextView getTex = (TextView) view;
         String FirstChar = getTex.getText().toString().toLowerCase();
-        int index = FirstMapDemo.getIndexofKey(FirstChar, contactMap);
+        int index = MapContactHelper.getIndexofKey(FirstChar, contactMap);
         listView.setSelection(index);
     }
 

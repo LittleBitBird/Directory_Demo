@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
+import com.example.guanhuawu.directory_demo.dao.ContactPersonDao;
 import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import java.sql.SQLException;

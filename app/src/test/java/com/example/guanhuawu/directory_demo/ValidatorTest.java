@@ -1,6 +1,6 @@
 package com.example.guanhuawu.directory_demo;
 
-import com.example.guanhuawu.directory_demo.Helper.Validator;
+import com.example.guanhuawu.directory_demo.helper.Validator;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;

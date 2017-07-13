@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
+import com.example.guanhuawu.directory_demo.dao.ContactPersonDao;
 import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import java.sql.SQLException;

@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
+import com.example.guanhuawu.directory_demo.dao.ContactPersonDao;
 import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
 import java.sql.SQLException;
@@ -62,6 +62,10 @@ public class AddContacts extends AppCompatActivity {
         setContentView(R.layout.activity_add__contacts);
 
         ButterKnife.bind(this);
+        createNewDao();
+    }
+
+    public void createNewDao(){
         try {
             dao = new ContactPersonDao(this);
         } catch (SQLException e) {
@@ -106,18 +110,22 @@ public class AddContacts extends AppCompatActivity {
             person.setSurName(medtSurname.getText().toString());
             person.setTelephoneNumber(medtTelePhoneNumber.getText().toString());
 
-            try {
-                dao.getContactDaoOpen().create(person);
-                dao.close();
-                Toast toast = Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-                this.finish();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            saveContact(person);
+            dao.close();
+            Toast toast = Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+            this.finish();
         }
 //        Log.e("color", mAdd_contacts.getCurrentTextColor() + "不同可用");
+    }
+
+    public void saveContact(ContactPerson person){
+        try {
+            dao.getContactDaoOpen().create(person);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.guanhuawu.directory_demo.Helper;
+package com.example.guanhuawu.directory_demo.helper;
 
 
 import net.sourceforge.pinyin4j.PinyinHelper;

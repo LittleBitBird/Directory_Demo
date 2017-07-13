@@ -6,9 +6,9 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
-import com.example.guanhuawu.directory_demo.Adpater.DataBaseHelper;
-import com.example.guanhuawu.directory_demo.DAO.ContactPersonDao;
-import com.example.guanhuawu.directory_demo.Helper.FirstMapDemo;
+import com.example.guanhuawu.directory_demo.adpater.DataBaseHelper;
+import com.example.guanhuawu.directory_demo.dao.ContactPersonDao;
+import com.example.guanhuawu.directory_demo.helper.MapContactHelper;
 import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 import com.j256.ormlite.dao.Dao;
 
@@ -37,7 +37,7 @@ public class DirectoryTest {
     static Context appContext;
     static ContactPersonDao contactPersonDao;
     static List<ContactPerson> personList = new ArrayList<>();
-    static FirstMapDemo mapDemo;
+    static MapContactHelper mapDemo;
     static Dao Basedao;
 
     @BeforeClass
@@ -46,7 +46,7 @@ public class DirectoryTest {
         dataBaseHelper = new DataBaseHelper(appContext);
         contactPersonDao = new ContactPersonDao(appContext);
         personList = contactPersonDao.getContactDaoOpen().queryForAll();
-        mapDemo = new FirstMapDemo();
+        mapDemo = new MapContactHelper();
 //        Basedao = contactPersonDao.getDao();
     }
 
@@ -69,7 +69,7 @@ public class DirectoryTest {
     @Test
     public void testconvertFromListToMap() {
         Map<String, List> contactMap = mapDemo.convertFromListToMap(personList);
-        String[] Mapkey = mapDemo.Mapkey;
+        String[] Mapkey = mapDemo.MAP_KEY;
         for (int i = 0; i < Mapkey.length; i++) {
             if (contactMap.containsKey(Mapkey[i])) {
                 List<ContactPerson> personList = contactMap.get(Mapkey[i]);

@@ -1,4 +1,4 @@
-package com.example.guanhuawu.directory_demo.Adpater;
+package com.example.guanhuawu.directory_demo.adpater;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.guanhuawu.directory_demo.Helper.Concert;
-import com.example.guanhuawu.directory_demo.Helper.FirstMapDemo;
+import com.example.guanhuawu.directory_demo.helper.Concert;
+import com.example.guanhuawu.directory_demo.helper.MapContactHelper;
 import com.example.guanhuawu.directory_demo.R;
 import com.example.guanhuawu.directory_demo.persist.ContactPerson;
 
@@ -28,12 +28,12 @@ public class DierctoryListViewAdapter extends BaseAdapter {
     public DierctoryListViewAdapter(Context context, Map map) {
         mContext = context;
         this.contactMap = map;
-        Log.e("Length", "DierctoryListViewAdapter: " + FirstMapDemo.getPersonNumber(contactMap));
+        Log.e("Length", "DierctoryListViewAdapter: " + MapContactHelper.getPersonNumber(contactMap));
     }
 
     @Override
     public int getCount() {
-        return FirstMapDemo.getPersonNumber(contactMap);
+        return MapContactHelper.getPersonNumber(contactMap);
     }
 
     @Override
@@ -59,15 +59,15 @@ public class DierctoryListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.charIndex.setVisibility(View.GONE);
-        ContactPerson person = FirstMapDemo.findPersonByPosition(contactMap, i);
+        ContactPerson person = MapContactHelper.findPersonByPosition(contactMap, i);
         holder.member.setText(person.getSurName() + "" + person.getFirstName());
         holder.charIndex = showIndex(i, holder.charIndex);
         return convertView;
     }
 
     public TextView showIndex(int i, TextView charIndex) {
-        ContactPerson nowPerson = FirstMapDemo.findPersonByPosition(contactMap, i);
-        ContactPerson lastPerson = FirstMapDemo.findPersonByPosition(contactMap, i - 1);
+        ContactPerson nowPerson = MapContactHelper.findPersonByPosition(contactMap, i);
+        ContactPerson lastPerson = MapContactHelper.findPersonByPosition(contactMap, i - 1);
 
         String nowFirstChar = Concert.getPingYin(nowPerson.getSurName()).substring(0, 1);
         String lastFirstChar;
